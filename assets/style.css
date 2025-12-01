@@ -1,0 +1,30 @@
+  /* assets/style.css - Professional, minimal styling */
+:root{
+  --accent:#0b63a8;
+  --muted:#6b7280;
+  --bg:#ffffff;
+  --card:#fbfdff;
+  --maxw:1100px;
+  --radius:12px;
+  --mono: "Segoe UI", Roboto, Arial, sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font-family:var(--mono);background:var(--bg);color:#0f1724;line-height:1.6}
+.container{max-width:var(--maxw);margin:0 auto;padding:28px}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0}
+.nav a{margin-left:18px;color:var(--muted);text-decoration:none;font-weight:600}
+.hero{display:grid;grid-template-columns:1fr;gap:20px;padding:36px 0}
+.profile-photo{width:120px;height:120px;border-radius:16px;object-fit:cover;box-shadow:0 6px 20px rgba(11,99,168,0.12)}
+.h1{font-size:28px;margin:0}
+.h2{color:var(--muted);margin-top:6px;margin-bottom:16px}
+.card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:0 8px 30px rgba(2,6,23,0.04)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
+.skills span{display:inline-block;background:#f1f5f9;padding:8px 10px;border-radius:999px;margin:6px 6px 0 0;color:#0b2b42;font-weight:600}
+.section-title{font-size:20px;margin-bottom:10px}
+.blog-list a{display:block;padding:12px 10px;border-radius:10px;text-decoration:none;color:inherit;margin-bottom:8px}
+.footer{padding:18px 0;color:var(--muted);font-size:14px;border-top:1px solid #eef2f7;margin-top:28px}
+.read-more{display:inline-block;margin-top:12px;padding:8px 12px;border-radius:8px;background:var(--accent);color:#fff;text-decoration:none}
+@media(min-width:860px){
+  .hero{grid-template-columns:1fr 420px;align-items:center}
+  .h1{font-size:36px}
+}
