@@ -10,5 +10,3 @@ window.API_BASE_URL = 'https://sadeeshkumargopalan-blog-website-backend.hf.space
 
 // To use this config, include this file before other scripts:
 // <script src="config.js"></script>
-
-
