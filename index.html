@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sadeesh's Blog</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">Sadeesh</div>
+            <nav class="main-nav">
+                <a href="#" class="nav-link active" data-category="">Home</a>
+                <div class="categories-dropdown">
+                    <a href="#" class="nav-link">Categories</a>
+                    <div class="categories-menu" id="categoriesMenu"></div>
+                </div>
+                <a href="about.html" class="nav-link">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Technology Stories & Ideas</h1>
+                <p class="hero-subtitle">A place to read Sadeesh's thoughts, insights, and deepen your understanding</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <div id="loading" class="loading">Loading stories...</div>
+                <div id="blogsContainer" class="blogs-list"></div>
+                <div id="noBlogs" class="no-blogs" style="display: none;">
+                    <p>No stories found.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#">Help</a>
+                <a href="about.html">About</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

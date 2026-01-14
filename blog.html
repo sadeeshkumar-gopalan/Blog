@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post - Sadeesh's Blog</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Sadeesh</a>
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <article id="blogPost" class="blog-detail" style="display: none;">
+            <div class="blog-header">
+                <span class="category-tag" id="blogCategory"></span>
+                <h2 id="blogTitle"></h2>
+                <div class="blog-meta-detail">
+                    <span class="blog-author">by Sadeesh</span>
+                    <time id="blogDate"></time>
+                </div>
+            </div>
+            
+            <div id="blogContent" class="blog-content"></div>
+        </article>
+        
+        <div id="loading" class="loading">Loading story...</div>
+        
+        <div id="error" class="error" style="display: none;">
+            <p>Story not found.</p>
+            <a href="index.html">← Back to all stories</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#">Help</a>
+                <a href="about.html">About</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Load individual blog post
+        const urlParams = new URLSearchParams(window.location.search);
+        const blogId = urlParams.get('id');
+        if (blogId) {
+            loadBlogPost(blogId);
+        } else {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
