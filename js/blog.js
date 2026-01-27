@@ -135,8 +135,11 @@ function createPostDetail(post) {
     if (post.text_content) {
         // The text_content may already contain HTML, so we insert it directly
         // This preserves all formatting like <ul>, <li>, <strong>, etc.
-        // We decode it first to handle cases where it might be stored as escaped HTML
-        contentHtml = `<div class="post-text-content">${decodeHtml(post.text_content)}</div>`;
+        // The text_content may already contain HTML, so we insert it directly
+        // We decode TWICE to handle double-escaping (common with some backend/database setups)
+        let decoded = decodeHtml(post.text_content);
+        decoded = decodeHtml(decoded);
+        contentHtml = `<div class="post-text-content">${decoded}</div>`;
     }
 
     return `
@@ -208,8 +211,10 @@ function getVideoUrl(post) {
 }
 
 function getPreviewText(text, wordCount) {
-    // Decode HTML entities first (in case they are escaped in DB)
-    const decoded = decodeHtml(text || '');
+    // Decode HTML entities TWICE to handle double-escaping
+    let decoded = decodeHtml(text || '');
+    decoded = decodeHtml(decoded);
+
     // Remove HTML tags for preview, but preserve line breaks
     const textOnly = decoded.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
     const words = textOnly.split(' ');
