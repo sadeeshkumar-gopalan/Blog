@@ -57,6 +57,7 @@ h6 {
   color: #ffffff;
   /* Fallback color */
   background: linear-gradient(to right, #ffffff 0%, #a3a3a3 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   /* Ensure it has a white fallback if gradient fails */
