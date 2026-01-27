@@ -60,7 +60,6 @@ h6 {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  /* Ensure it has a white fallback if gradient fails */
 }
 
 .h2 {
@@ -223,6 +222,38 @@ a {
   line-height: 1.6;
 }
 
+/* Contact Section */
+.contact-section {
+  text-align: center;
+  margin-top: 120px;
+  margin-bottom: 80px;
+  padding: 60px 20px;
+  background: linear-gradient(to bottom, transparent, var(--card-bg));
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+.contact-section .section-title {
+  border-left: none;
+  padding-left: 0;
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.contact-section p {
+  max-width: 600px;
+  margin: 0 auto;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.contact-section .read-more {
+  margin-top: 40px;
+  padding: 16px 40px;
+  font-size: 1.1rem;
+}
+
+
 /* Blog Post List Styles */
 #blogPosts {
   display: grid;
@@ -369,7 +400,7 @@ a {
 /* Footer */
 footer,
 .footer {
-  margin-top: 120px;
+  margin-top: 60px;
   padding: 60px 0;
   border-top: 1px solid var(--border);
   text-align: center;
