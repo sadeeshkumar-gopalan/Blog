@@ -54,9 +54,12 @@ h6 {
   font-size: 3.5rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  background: linear-gradient(to right, #fff, #999);
+  color: #ffffff;
+  /* Fallback color */
+  background: linear-gradient(to right, #ffffff 0%, #a3a3a3 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  /* Ensure it has a white fallback if gradient fails */
 }
 
 .h2 {
@@ -283,6 +286,7 @@ a {
   font-weight: 700;
   margin-bottom: 16px;
   margin-top: 0;
+  color: #ffffff;
 }
 
 .post-title a:hover {
