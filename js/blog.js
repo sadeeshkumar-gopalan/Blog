@@ -136,9 +136,15 @@ function createPostDetail(post) {
         // The text_content may already contain HTML, so we insert it directly
         // This preserves all formatting like <ul>, <li>, <strong>, etc.
         // The text_content may already contain HTML, so we insert it directly
-        // We decode TWICE to handle double-escaping (common with some backend/database setups)
-        let decoded = decodeHtml(post.text_content);
-        decoded = decodeHtml(decoded);
+        // The text_content may already contain HTML, so we insert it directly
+        // Use recursive decoding to handle any level of escaping (1x, 2x, 3x...)
+        let decoded = post.text_content;
+        // Decode up to 5 times or until stable
+        for (let i = 0; i < 5; i++) {
+            const temp = decodeHtml(decoded);
+            if (temp === decoded) break;
+            decoded = temp;
+        }
         contentHtml = `<div class="post-text-content">${decoded}</div>`;
     }
 
