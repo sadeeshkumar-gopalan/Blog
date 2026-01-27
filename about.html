@@ -1,38 +1,113 @@
 <!-- ===================== about.html ===================== -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>About | Sadeesh Kumar</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About | Sadeesh Kumar</title>
+    <link rel="stylesheet" href="./assets/style.css">
+    <style>
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .profile-image-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+        }
+
+        .profile-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.02);
+        }
+
+        @media (min-width: 860px) {
+            .about-grid {
+                grid-template-columns: 1fr 1fr;
+                align-items: start;
+            }
+
+            .profile-image-container {
+                position: sticky;
+                top: 100px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<header>
-<nav>
-<a href="/">Home</a>
-<a href="/blog.html">Blog</a>
-</nav>
-</header>
 
+    <header class="header container">
+        <div class="logo" style="font-weight: bold; font-size: 1.2rem;">Sadeesh Kumar</div>
+        <nav class="nav">
+            <a href="index.html">Home</a>
+            <a href="about.html" class="active">About</a>
+            <a href="blog.html">Blog</a>
+            <a href="index.html#contact">Contact</a>
+        </nav>
+    </header>
 
-<main style="max-width:900px;margin:60px auto;font-family:Segoe UI,Roboto,Arial">
-<h1>About Me</h1>
-<p>I am a technology professional with a strong interest in Artificial Intelligence, Cybersecurity, and Leadership. I focus on understanding how emerging technologies impact organizations and individuals in real-world scenarios.</p>
+    <main class="container">
+        <div class="about-grid">
+            <!-- Text Content -->
+            <div>
+                <h1 class="h1" style="margin-bottom: 24px;">About Me</h1>
+                <div class="post-text-content">
+                    <p class="h2" style="margin-bottom: 32px; color: var(--text-muted); font-size: 1.4rem;">
+                        I am a technology professional with a strong interest in Artificial Intelligence, Cybersecurity,
+                        and Leadership.
+                    </p>
 
+                    <p>I focus on understanding how emerging technologies impact organizations and individuals in
+                        real-world scenarios.</p>
 
-<p>Through this platform, I share insights on cyber attacks, AI trends, leadership thinking, and key industry updates — with an emphasis on clarity, security awareness, and continuous learning.</p>
+                    <p>Through this platform, I share insights on cyber attacks, AI trends, leadership thinking, and key
+                        industry updates — with an emphasis on clarity, security awareness, and continuous learning.</p>
 
+                    <h3 style="margin-top: 40px; margin-bottom: 20px;">Core Focus Areas</h3>
+                    <ul style="color: var(--text-muted);">
+                        <li><strong style="color: white;">Artificial Intelligence & Automation</strong></li>
+                        <li><strong style="color: white;">Cybersecurity & Incident Awareness</strong></li>
+                        <li><strong style="color: white;">Leadership & Communication</strong></li>
+                        <li><strong style="color: white;">Technology News & Analysis</strong></li>
+                    </ul>
 
-<h3>Core Focus Areas</h3>
-<ul>
-<li>Artificial Intelligence & Automation</li>
-<li>Cybersecurity & Incident Awareness</li>
-<li>Leadership & Communication</li>
-<li>Technology News & Analysis</li>
-</ul>
+                    <p
+                        style="margin-top: 30px; font-style: italic; border-left: 3px solid var(--accent); padding-left: 20px;">
+                        "I believe technology knowledge should be shared responsibly and explained in a way that
+                        empowers better decisions."
+                    </p>
+                </div>
 
+                <a href="index.html#contact" class="cta" style="margin-top: 40px;">Get in Touch</a>
+            </div>
 
-<p>I believe technology knowledge should be shared responsibly and explained in a way that empowers better decisions.</p>
-</main>
+            <!-- Profile Image -->
+            <div class="profile-image-container">
+                <img src="./assets/profile.jpg" alt="Sadeesh Kumar" class="profile-image">
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        © 2026 Sadeesh Kumar Gopalan
+    </footer>
+
 </body>
+
 </html>
