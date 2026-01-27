@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check if we're on a single post page or blog listing page
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
-    
+
     if (postId) {
         // Hide blog listing, show single post container
         const blogPostsEl = document.getElementById('blogPosts');
@@ -26,27 +26,27 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loadAllPosts() {
     const blogContainer = document.getElementById('blogPosts');
     if (!blogContainer) return;
-    
+
     try {
         blogContainer.innerHTML = '<div class="loading">Loading posts...</div>';
-        
+
         const response = await fetch(`${API_BASE_URL}/api/blogs`);
         if (!response.ok) throw new Error('Failed to fetch posts');
-        
+
         const posts = await response.json();
-        
+
         if (posts.length === 0) {
             blogContainer.innerHTML = '<div class="no-posts"><p>No blog posts yet. Check back soon!</p></div>';
             return;
         }
-        
+
         blogContainer.innerHTML = '';
-        
+
         posts.forEach(post => {
             const postElement = createPostCard(post);
             blogContainer.appendChild(postElement);
         });
-        
+
     } catch (error) {
         console.error('Error loading posts:', error);
         blogContainer.innerHTML = `
@@ -66,17 +66,17 @@ async function loadAllPosts() {
 async function loadSinglePost(postId) {
     const blogContainer = document.getElementById('blogPost');
     if (!blogContainer) return;
-    
+
     try {
         blogContainer.innerHTML = '<div class="loading">Loading post...</div>';
-        
+
         const response = await fetch(`${API_BASE_URL}/api/blogs/${postId}`);
         if (!response.ok) throw new Error('Post not found');
-        
+
         const post = await response.json();
-        
+
         blogContainer.innerHTML = createPostDetail(post);
-        
+
     } catch (error) {
         console.error('Error loading post:', error);
         blogContainer.innerHTML = `
@@ -96,15 +96,15 @@ async function loadSinglePost(postId) {
 function createPostCard(post) {
     const article = document.createElement('article');
     article.className = 'blog-post-card';
-    
+
     // Get preview text (first 50 words)
-    const previewText = post.text_content 
+    const previewText = post.text_content
         ? getPreviewText(post.text_content, 50)
         : (post.caption || '');
-    
+
     // Get image URL for preview
     const imageUrl = getImageUrl(post);
-    
+
     article.innerHTML = `
         ${imageUrl ? `<div class="post-image-container">
             <img src="${imageUrl}" alt="${post.title}" class="post-image-preview" loading="lazy">
@@ -121,23 +121,24 @@ function createPostCard(post) {
             <a href="blog.html?id=${post.id}" class="read-more">Read More →</a>
         </div>
     `;
-    
+
     return article;
 }
 
 function createPostDetail(post) {
     const imageUrl = getImageUrl(post);
     const videoUrl = getVideoUrl(post);
-    
+
     let contentHtml = '';
-    
+
     // Render text content as HTML to preserve formatting (bullet points, bold, etc.)
     if (post.text_content) {
         // The text_content may already contain HTML, so we insert it directly
         // This preserves all formatting like <ul>, <li>, <strong>, etc.
-        contentHtml = `<div class="post-text-content">${post.text_content}</div>`;
+        // We decode it first to handle cases where it might be stored as escaped HTML
+        contentHtml = `<div class="post-text-content">${decodeHtml(post.text_content)}</div>`;
     }
-    
+
     return `
         <article class="blog-post-detail">
             <div class="post-header">
@@ -182,7 +183,7 @@ function createPostDetail(post) {
 
 function getImageUrl(post) {
     if (!post.content_url) return null;
-    
+
     if (post.content_type === 'image' || post.content_type === 'image_text') {
         // If it's a full URL, use it directly
         if (post.content_url.startsWith('http://') || post.content_url.startsWith('https://')) {
@@ -191,13 +192,13 @@ function getImageUrl(post) {
         // Otherwise, it's an uploaded file
         return `${API_BASE_URL}/uploads/${post.content_url}`;
     }
-    
+
     return null;
 }
 
 function getVideoUrl(post) {
     if (!post.content_url || post.content_type !== 'video') return null;
-    
+
     // If it's a full URL, use it directly
     if (post.content_url.startsWith('http://') || post.content_url.startsWith('https://')) {
         return post.content_url;
@@ -207,14 +208,16 @@ function getVideoUrl(post) {
 }
 
 function getPreviewText(text, wordCount) {
+    // Decode HTML entities first (in case they are escaped in DB)
+    const decoded = decodeHtml(text || '');
     // Remove HTML tags for preview, but preserve line breaks
-    const textOnly = text.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    const textOnly = decoded.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
     const words = textOnly.split(' ');
-    
+
     if (words.length <= wordCount) {
         return textOnly;
     }
-    
+
     return words.slice(0, wordCount).join(' ') + '...';
 }
 
@@ -232,4 +235,10 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+
+function decodeHtml(html) {
+    const txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
 }
