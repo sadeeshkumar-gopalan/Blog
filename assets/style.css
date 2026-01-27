@@ -22,7 +22,7 @@ html,body{margin:0;padding:0;font-family:var(--mono);background:var(--bg);color:
 .skills span{display:inline-block;background:#f1f5f9;padding:8px 10px;border-radius:999px;margin:6px 6px 0 0;color:#0b2b42;font-weight:600}
 .section-title{font-size:20px;margin-bottom:10px}
 .blog-list a{display:block;padding:12px 10px;border-radius:10px;text-decoration:none;color:inherit;margin-bottom:8px}
-.footer{padding:18px 0;color:var(--muted);font-size:14px;border-top:1px solid #eef2f7;margin-top:28px}
+footer, .footer{padding:18px 0;color:var(--muted);font-size:14px;border-top:1px solid #eef2f7;margin-top:28px}
 .read-more{display:inline-block;margin-top:12px;padding:8px 12px;border-radius:8px;background:var(--accent);color:#fff;text-decoration:none}
 @media(min-width:860px){
   .hero{grid-template-columns:1fr 420px;align-items:center}
