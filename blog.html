@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Blog | Sadeesh Kumar</title>
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="./assets/style.css">
     <style>
         header {
             background: #ffffff;
             border-bottom: 1px solid #eef2f7;
             padding: 16px 0;
         }
+
         nav {
             max-width: 1100px;
             margin: 0 auto;
@@ -18,31 +20,37 @@
             display: flex;
             gap: 24px;
         }
+
         nav a {
             color: var(--muted);
             text-decoration: none;
             font-weight: 600;
             transition: color 0.2s;
         }
+
         nav a:hover {
             color: var(--accent);
         }
+
         main {
             max-width: 1100px;
             margin: 60px auto;
             padding: 0 28px;
             font-family: var(--mono);
         }
+
         main h1 {
             font-size: 36px;
             margin-bottom: 12px;
             color: #0f1724;
         }
-        main > p {
+
+        main>p {
             color: var(--muted);
             font-size: 18px;
             margin-bottom: 40px;
         }
+
         footer {
             padding: 30px;
             text-align: center;
@@ -53,6 +61,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav>
@@ -65,10 +74,10 @@
     <main>
         <h1>Knowledge Updates & Insights</h1>
         <p>Regular updates on AI, Cybersecurity incidents, leadership perspectives, and important technology news.</p>
-        
+
         <!-- Blog posts will be loaded here dynamically -->
         <div id="blogPosts"></div>
-        
+
         <!-- Single post view (hidden by default, shown when ?id= is in URL) -->
         <div id="blogPost" style="display: none;"></div>
     </main>
@@ -80,4 +89,5 @@
     <script src="config.js?v=cachebust1"></script>
     <script src="js/blog.js?v=cachebust1"></script>
 </body>
+
 </html>
