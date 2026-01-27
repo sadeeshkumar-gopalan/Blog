@@ -1,29 +1,83 @@
-<!-- ===================== blog.html ===================== -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Blog | Sadeesh Kumar</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blog | Sadeesh Kumar</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #eef2f7;
+            padding: 16px 0;
+        }
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 28px;
+            display: flex;
+            gap: 24px;
+        }
+        nav a {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: var(--accent);
+        }
+        main {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 28px;
+            font-family: var(--mono);
+        }
+        main h1 {
+            font-size: 36px;
+            margin-bottom: 12px;
+            color: #0f1724;
+        }
+        main > p {
+            color: var(--muted);
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+        footer {
+            padding: 30px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 14px;
+            border-top: 1px solid #eef2f7;
+            margin-top: 80px;
+        }
+    </style>
 </head>
 <body>
-<header>
-<nav>
-<a href="/">Home</a>
-<a href="/about.html">About</a>
-</nav>
-</header>
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="blog.html">Blog</a>
+        </nav>
+    </header>
 
+    <main>
+        <h1>Knowledge Updates & Insights</h1>
+        <p>Regular updates on AI, Cybersecurity incidents, leadership perspectives, and important technology news.</p>
+        
+        <!-- Blog posts will be loaded here dynamically -->
+        <div id="blogPosts"></div>
+        
+        <!-- Single post view (hidden by default, shown when ?id= is in URL) -->
+        <div id="blogPost" style="display: none;"></div>
+    </main>
 
-<main style="max-width:900px;margin:60px auto;font-family:Segoe UI,Roboto,Arial">
-<h1>Knowledge Updates & Insights</h1>
-<p>Regular updates on AI, Cybersecurity incidents, leadership perspectives, and important technology news.</p>
+    <footer>
+        © 2026 Sadeesh Kumar Gopalan • Built with GitHub Pages
+    </footer>
 
-
-<article>
-<h3>🚨 Sample: Recent Cyber Attack – What Happened & Lessons Learned</h3>
-<p><em>Coming soon</em> — analysis of recent cyber incidents with key takeaways.</p>
-</article>
-</main>
+    <script src="config.js"></script>
+    <script src="js/blog.js"></script>
 </body>
 </html>
