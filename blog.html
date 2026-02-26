@@ -6,6 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Blog | Sadeesh Kumar</title>
     <link rel="stylesheet" href="./assets/style.css?v=3">
+    <style>
+        /* Force 3-column grid - override any cached CSS */
+        #blogPosts {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 24px !important;
+        }
+
+        @media (max-width: 1024px) {
+            #blogPosts {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
+        @media (max-width: 640px) {
+            #blogPosts {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        .blog-post-card {
+            min-width: 0;
+        }
+    </style>
 
 </head>
 
