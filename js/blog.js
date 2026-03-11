@@ -10,33 +10,52 @@ document.addEventListener('DOMContentLoaded', () => {
         // Hide blog listing, show single post container
         const blogPostsEl = document.getElementById('blogPosts');
         const blogPostEl = document.getElementById('blogPost');
+        const filtersEl = document.getElementById('categoryFilters');
         if (blogPostsEl) blogPostsEl.style.display = 'none';
         if (blogPostEl) blogPostEl.style.display = 'block';
+        if (filtersEl) filtersEl.style.display = 'none';
         loadSinglePost(postId);
     } else {
         // Show blog listing, hide single post container
         const blogPostsEl = document.getElementById('blogPosts');
         const blogPostEl = document.getElementById('blogPost');
+        const filtersEl = document.getElementById('categoryFilters');
+        const category = urlParams.get('category');
+
         if (blogPostsEl) blogPostsEl.style.display = 'block';
         if (blogPostEl) blogPostEl.style.display = 'none';
-        loadAllPosts();
+        if (filtersEl) filtersEl.style.display = 'flex';
+        
+        loadAllPosts(category);
     }
 });
 
-async function loadAllPosts() {
+let allPosts = []; // Store posts to extract categories once
+
+async function loadAllPosts(category = null) {
     const blogContainer = document.getElementById('blogPosts');
     if (!blogContainer) return;
 
     try {
         blogContainer.innerHTML = '<div class="loading">Loading posts...</div>';
 
-        const response = await fetch(`${API_BASE_URL}/api/blogs`);
+        // Fetch filtered or all
+        const url = category && category !== 'all' 
+            ? `${API_BASE_URL}/api/blogs?category=${encodeURIComponent(category)}`
+            : `${API_BASE_URL}/api/blogs`;
+
+        const response = await fetch(url);
         if (!response.ok) throw new Error('Failed to fetch posts');
 
         const posts = await response.json();
+        
+        if (!category || category === 'all') {
+            allPosts = posts; // Cache all for category extraction
+            renderCategoryFilters(posts);
+        }
 
         if (posts.length === 0) {
-            blogContainer.innerHTML = '<div class="no-posts"><p>No blog posts yet. Check back soon!</p></div>';
+            blogContainer.innerHTML = '<div class="no-posts"><p>No posts found in this category.</p></div>';
             return;
         }
 
@@ -252,4 +271,40 @@ function decodeHtml(html) {
     const txt = document.createElement("textarea");
     txt.innerHTML = html;
     return txt.value;
+}
+
+function renderCategoryFilters(posts) {
+    const filterContainer = document.getElementById('categoryFilters');
+    if (!filterContainer) return;
+
+    // Get unique categories
+    const categories = ['all', ...new Set(posts.map(p => p.category))];
+    
+    // Preserve current selection if any
+    const currentCategory = new URLSearchParams(window.location.search).get('category') || 'all';
+
+    filterContainer.innerHTML = categories.map(cat => `
+        <button class="filter-btn ${cat === currentCategory ? 'active' : ''}" data-category="${cat}">
+            ${cat === 'all' ? 'All Updates' : cat}
+        </button>
+    `).join('');
+
+    // Add click listeners
+    filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.onclick = () => {
+            const cat = btn.getAttribute('data-category');
+            
+            // Update UI
+            filterContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Update URL without reloading (optional, helps with bookmarking)
+            const newUrl = new URL(window.location);
+            if (cat === 'all') newUrl.searchParams.delete('category');
+            else newUrl.searchParams.set('category', cat);
+            window.history.pushState({}, '', newUrl);
+
+            loadAllPosts(cat);
+        };
+    });
 }
