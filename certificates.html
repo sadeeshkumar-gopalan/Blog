@@ -222,12 +222,11 @@
                         <th>Vendor / OEM</th>
                         <th>Type</th>
                         <th>Valid Until</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="certTableBody">
                     <tr>
-                        <td colspan="6" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                        <td colspan="5" style="text-align: center; padding: 40px; color: var(--text-muted);">
                             Loading certification registry...
                         </td>
                     </tr>
@@ -266,7 +265,7 @@
                 if (certs.length === 0) {
                     tableBody.innerHTML = `
                         <tr>
-                            <td colspan="6" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                            <td colspan="5" style="text-align: center; padding: 40px; color: var(--text-muted);">
                                 No certifications found in the registry.
                             </td>
                         </tr>
@@ -286,19 +285,13 @@
                             <td>${cert.vendor || cert.issuer || 'N/A'}</td>
                             <td>${cert.credential_type || 'N/A'}</td>
                             <td><span class="status-badge ${validityClass}">${validityText}</span></td>
-                            <td>
-                                ${cert.image_url ? 
-                                    `<button class="view-btn" onclick="openModal('${API_BASE_URL}/uploads/${cert.image_url}')">View Certificate</button>` : 
-                                    `<span style="color: #444; font-size: 0.8rem;">Metadata Only</span>`
-                                }
-                            </td>
                         </tr>
                     `;
                 }).join('');
 
             } catch (error) {
                 console.error('Error fetching certificates:', error);
-                document.getElementById('certTableBody').innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--red);">Error loading registry.</td></tr>';
+                document.getElementById('certTableBody').innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--red);">Error loading registry.</td></tr>';
             }
         });
 
