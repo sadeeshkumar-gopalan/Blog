@@ -202,12 +202,19 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100%;
 }
 
 .card:hover {
   transform: translateY(-8px);
   border-color: var(--accent);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .card h3 {
