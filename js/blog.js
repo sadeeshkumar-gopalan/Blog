@@ -290,8 +290,8 @@ function renderCategoryFilters() {
     const filterContainer = document.getElementById('categoryFilters');
     if (!filterContainer) return;
 
-    // Consolidate into 6 professionally-focused tags
-    const categories = ['all', 'AI & Automation', 'Cybersecurity', 'Leadership', 'Personality Development', 'Knowledge Sharing'];
+    // Consolidate into 7 professionally-focused tags
+    const categories = ['all', 'AI & Automation', 'Cybersecurity', 'Leadership', 'Personality Development', 'Knowledge Sharing', 'Technical News'];
     
     // Preserve current selection from URL
     const currentCategory = new URLSearchParams(window.location.search).get('category') || 'all';
