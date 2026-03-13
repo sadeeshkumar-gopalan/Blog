@@ -115,6 +115,84 @@
             font-weight: bold;
             cursor: pointer;
         }
+        /* Cert Table Styling */
+        .cert-table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 40px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+        }
+
+        .cert-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 800px;
+        }
+
+        .cert-table th, .cert-table td {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cert-table th {
+            background: rgba(var(--accent-rgb), 0.1);
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        .cert-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .cert-table td {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .cert-table .cert-name {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-never {
+            background: rgba(46, 213, 115, 0.1);
+            color: #2ed573;
+        }
+
+        .status-date {
+            background: rgba(var(--accent-rgb), 0.1);
+            color: var(--accent);
+        }
+
+        .view-btn {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .view-btn:hover {
+            background: var(--accent);
+            color: #fff;
+        }
     </style>
 </head>
 
@@ -135,11 +213,26 @@
         <h1 class="h1">Certificates & Awards</h1>
         <p class="h2">A collection of my professional certifications, awards, and recognitions in AI, Cybersecurity, and Leadership.</p>
 
-        <div id="certContainer" class="cert-grid">
-            <!-- Loading State -->
-            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">
-                Loading certificates...
-            </div>
+        <div id="certTableContainer" class="cert-table-container">
+            <table class="cert-table">
+                <thead>
+                    <tr>
+                        <th>Sl.No</th>
+                        <th>Credential Name</th>
+                        <th>Vendor / OEM</th>
+                        <th>Type</th>
+                        <th>Valid Until</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="certTableBody">
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                            Loading certification registry...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </section>
 
@@ -168,32 +261,44 @@
                 const response = await fetch(`${API_BASE_URL}/api/certificates`);
                 const certs = await response.json();
 
+                const tableBody = document.getElementById('certTableBody');
+
                 if (certs.length === 0) {
-                    certContainer.innerHTML = `
-                        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted); background: var(--card-bg); border-radius: var(--radius-md); border: 1px dashed var(--border);">
-                            <p>No certificates uploaded yet.</p>
-                        </div>
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                                No certifications found in the registry.
+                            </td>
+                        </tr>
                     `;
                     return;
                 }
 
-                certContainer.innerHTML = certs.map(cert => `
-                    <div class="cert-card">
-                        <div class="cert-image-container" onclick="openModal('${API_BASE_URL}/uploads/${cert.image_url}')">
-                            <img src="${API_BASE_URL}/uploads/${cert.image_url}" alt="${cert.title}" class="cert-image">
-                        </div>
-                        <div class="cert-info">
-                            <div class="cert-issuer">${cert.issuer || ''}</div>
-                            <h3 class="cert-title">${cert.title}</h3>
-                            <div class="cert-date">${cert.issue_date || ''}</div>
-                            <p class="cert-desc">${cert.description || ''}</p>
-                        </div>
-                    </div>
-                `).join('');
+                tableBody.innerHTML = certs.map((cert, index) => {
+                    const isValidUntilNever = !cert.valid_until || cert.valid_until.toLowerCase() === 'never';
+                    const validityClass = isValidUntilNever ? 'status-never' : 'status-date';
+                    const validityText = isValidUntilNever ? 'Lifetime / Never' : cert.valid_until;
+
+                    return `
+                        <tr>
+                            <td>${cert.sl_no || (index + 1)}</td>
+                            <td class="cert-name">${cert.title}</td>
+                            <td>${cert.vendor || cert.issuer || 'N/A'}</td>
+                            <td>${cert.credential_type || 'N/A'}</td>
+                            <td><span class="status-badge ${validityClass}">${validityText}</span></td>
+                            <td>
+                                ${cert.image_url ? 
+                                    `<button class="view-btn" onclick="openModal('${API_BASE_URL}/uploads/${cert.image_url}')">View Certificate</button>` : 
+                                    `<span style="color: #444; font-size: 0.8rem;">Metadata Only</span>`
+                                }
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
 
             } catch (error) {
                 console.error('Error fetching certificates:', error);
-                certContainer.innerHTML = '<p>Error loading certificates. Please try again later.</p>';
+                document.getElementById('certTableBody').innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--red);">Error loading registry.</td></tr>';
             }
         });
 
