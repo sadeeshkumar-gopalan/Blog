@@ -50,8 +50,21 @@ async function loadAllPosts(category = null) {
         const posts = await response.json();
         
         if (!category || category === 'all') {
-            allPosts = posts; // Cache all for category extraction
-            renderCategoryFilters(posts);
+            allPosts = posts; 
+            renderCategoryFilters(); // No need to pass posts anymore
+        }
+
+        // Update Page Title and Heading to make it feel like a separate page
+        const titleEl = document.querySelector('.h1');
+        const descEl = document.querySelector('.h2');
+        if (category && category !== 'all') {
+            document.title = `${category} | Sadeesh Kumar`;
+            if (titleEl) titleEl.textContent = category;
+            if (descEl) descEl.textContent = `Explore all articles and insights related to ${category}.`;
+        } else {
+            document.title = `Blog | Sadeesh Kumar`;
+            if (titleEl) titleEl.textContent = 'Knowledge Updates & Insights';
+            if (descEl) descEl.textContent = 'Regular updates on AI, Cybersecurity incidents, leadership perspectives, and important technology news.';
         }
 
         if (posts.length === 0) {
@@ -273,14 +286,14 @@ function decodeHtml(html) {
     return txt.value;
 }
 
-function renderCategoryFilters(posts) {
+function renderCategoryFilters() {
     const filterContainer = document.getElementById('categoryFilters');
     if (!filterContainer) return;
 
-    // Get unique categories
-    const categories = ['all', ...new Set(posts.map(p => p.category))];
+    // Consolidate into 4 project-focused tags
+    const categories = ['all', 'AI & Automation', 'Cybersecurity', 'Leadership', 'Tech News'];
     
-    // Preserve current selection if any
+    // Preserve current selection from URL
     const currentCategory = new URLSearchParams(window.location.search).get('category') || 'all';
 
     filterContainer.innerHTML = categories.map(cat => `
@@ -294,17 +307,10 @@ function renderCategoryFilters(posts) {
         btn.onclick = () => {
             const cat = btn.getAttribute('data-category');
             
-            // Update UI
-            filterContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            // Update URL without reloading (optional, helps with bookmarking)
-            const newUrl = new URL(window.location);
-            if (cat === 'all') newUrl.searchParams.delete('category');
-            else newUrl.searchParams.set('category', cat);
-            window.history.pushState({}, '', newUrl);
-
-            loadAllPosts(cat);
+            // Redirect to simulate separate page
+            const newUrl = new URL(window.location.origin + window.location.pathname);
+            if (cat !== 'all') newUrl.searchParams.set('category', cat);
+            window.location.href = newUrl.toString();
         };
     });
 }
